@@ -20,19 +20,19 @@ public class OpenNoteActivity extends AppCompatActivity {
             return;
         }
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             FullNoteOutputFragment input = new FullNoteOutputFragment();
             input.setArguments(getIntent().getExtras());
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.full_note_fragment,input,null)
+                    .add(R.id.full_note_fragment, input, null)
                     .commit();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar_menu,menu);
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 }

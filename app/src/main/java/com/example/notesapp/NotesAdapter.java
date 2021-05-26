@@ -15,14 +15,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     private CardsSource dataSource;
 
-    public NotesAdapter(CardsSource dataSource){
+    public NotesAdapter(CardsSource dataSource) {
         this.dataSource = dataSource;
     }
 
     @NonNull
     @Override
     public NotesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_layout,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_layout, parent, false);
         return new ViewHolder(v);
     }
 
@@ -37,12 +37,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         return dataSource.size();
     }
 
-    public void SetOnItemClickListener(OnItemClickListener itemClickListener){
+    public void SetOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view , int position);
+        void onItemClick(View view, int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,16 +59,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(itemClickListener != null){
-                        itemClickListener.onItemClick(view,getAdapterPosition());
+                    if (itemClickListener != null) {
+                        itemClickListener.onItemClick(view, getAdapterPosition());
                     }
                 }
             });
         }
 
 
-
-        public void setData(Note note){
+        public void setData(Note note) {
             name.setText(note.getName());
             date.setText(note.getDate());
         }

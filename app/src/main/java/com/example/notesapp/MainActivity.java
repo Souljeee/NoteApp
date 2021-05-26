@@ -21,23 +21,23 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_output_container,new NoteOutputFragment(),null)
+                .add(R.id.fragment_output_container, new NoteOutputFragment(), null)
                 .commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar_menu,menu);
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.action_add:
                 Intent intent = new Intent(this, OpenNoteActivity.class);
-                intent.putExtra(FullNoteOutputFragment.ARG_INDEX,NEW_ITEM_FLAG);
+                intent.putExtra(FullNoteOutputFragment.ARG_INDEX, NEW_ITEM_FLAG);
                 startActivity(intent);
                 return true;
         }

@@ -26,7 +26,7 @@ public class FullNoteOutputFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
+        if (getArguments() != null) {
             index = getArguments().getInt(ARG_INDEX);
         }
     }
@@ -39,15 +39,15 @@ public class FullNoteOutputFragment extends Fragment {
         return f;
     }
 
-    public void setData(View view){
+    public void setData(View view) {
         CardsSource currentCard = new CardsSourceImpl(getResources()).init();
         editTextName = view.findViewById(R.id.edit_text_name);
         editTextDescription = view.findViewById(R.id.edit_text_description);
-        if(index != -1){
+        if (index != -1) {
             Note currentNote = currentCard.getNote(index);
             editTextName.setText(currentNote.getName());
             editTextDescription.setText(currentNote.getDescription());
-        }else{
+        } else {
             editTextName.setText("");
             editTextDescription.setText("");
         }

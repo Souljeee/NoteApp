@@ -20,7 +20,7 @@ public class CardsSourceImpl implements CardsSource {
         String[] descriptionsOfNote = resources.getStringArray(R.array.descriptionOfNote);
         String[] datesOfNote = resources.getStringArray(R.array.dateOfCreate);
         for (int i = 0; i < namesOfNote.length; i++) {
-            dataSource.add(new Note(namesOfNote[i], datesOfNote[i],descriptionsOfNote[i]));
+            dataSource.add(new Note(namesOfNote[i], datesOfNote[i], descriptionsOfNote[i]));
         }
         return this;
     }
