@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_land_fragment_width">0dp</dimen>
+    <dimen name="edit_text_full_note_padding_start_end">10dp</dimen>
+    <dimen name="edit_text_full_note_text_size">20sp</dimen>
+    <dimen name="edit_text_full_note_margin_bottom">20dp</dimen>
+    <dimen name="line_full_note_margin_left_right">4dp</dimen>
+    <dimen name="line_full_note_width">2dp</dimen>
+    <dimen name="header_layout_image_view_width_height">60dp</dimen>
+    <dimen name="header_layout_image_view_margin_start">30dp</dimen>
+    <dimen name="header_layout_image_view_margin_top">20dp</dimen>
+    <dimen name="header_layout_text_view_text_size">20sp</dimen>
+    <dimen name="header_layout_text_view_margin_start">30dp</dimen>
+    <dimen name="item_height">80dp</dimen>
+    <dimen name="item_corner">15dp</dimen>
+    <dimen name="item_elevation">20dp</dimen>
+    <dimen name="item_margin">10dp</dimen>
+    <dimen name="item_text_view_margin_start">10dp</dimen>
+    <dimen name="item_name_text_size">20sp</dimen>
+    <dimen name="item_date_text_size">14sp</dimen>
+</resources>

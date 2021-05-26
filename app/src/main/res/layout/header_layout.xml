@@ -8,17 +8,17 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/header_layout_image_view_width_height"
+        android:layout_height="@dimen/header_layout_image_view_width_height"
+        android:layout_marginStart="@dimen/header_layout_image_view_margin_start"
+        android:layout_marginTop="@dimen/header_layout_image_view_margin_top"
         app:srcCompat="@android:drawable/ic_menu_my_calendar" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nickname"
-        android:textSize="20sp"
-        android:layout_marginStart="30dp"
+        android:textSize="@dimen/header_layout_text_view_text_size"
+        android:layout_marginStart="@dimen/header_layout_text_view_margin_start"
         android:textColor="#FBFBFB"/>
 
 

@@ -5,4 +5,7 @@
     <string name="drawer_menu_item_notes">Заметки</string>
     <string name="drawer_menu_item_about">О приложении</string>
     <string name="nickname">Роман Мокшин</string>
+    <string name="edit_note_hint">Введите текст</string>
+    <string name="edit_note_name_hint">Введите название</string>
+    <string name="action_add_title">Добавить заметку</string>
 </resources>

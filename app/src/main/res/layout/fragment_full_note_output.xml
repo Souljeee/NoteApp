@@ -6,4 +6,38 @@
     tools:context=".FullNoteOutputFragment"
     android:orientation="vertical">
 
+
+    <EditText
+        android:id="@+id/edit_text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/edit_note_name_hint"
+        android:paddingStart="@dimen/edit_text_full_note_padding_start_end"
+        android:paddingEnd="@dimen/edit_text_full_note_padding_start_end"
+        android:inputType="text"
+        android:gravity="start"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit_text_full_note_text_size"
+        android:layout_marginBottom="@dimen/edit_text_full_note_margin_bottom"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_full_note_width"
+        android:background="#7b7b7b"
+        android:layout_marginLeft="@dimen/line_full_note_margin_left_right"
+        android:layout_marginRight="@dimen/line_full_note_margin_left_right" />
+
+    <EditText
+        android:paddingStart="@dimen/edit_text_full_note_padding_start_end"
+        android:paddingEnd="@dimen/edit_text_full_note_padding_start_end"
+        android:id="@+id/edit_text_description"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="@string/edit_note_hint"
+        android:gravity="start|top"
+        android:inputType="textLongMessage|textMultiLine"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit_text_full_note_text_size"/>
 </LinearLayout>
