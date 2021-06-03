@@ -24,9 +24,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         return menuPosition;
     }
 
-    public NotesAdapter(CardsSource dataSource, Fragment fragment) {
-        this.dataSource = dataSource;
+    public NotesAdapter(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setDataSource(CardsSource dataSource){
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
 
     @NonNull

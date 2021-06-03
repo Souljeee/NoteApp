@@ -48,8 +48,15 @@ public class NoteOutputFragment extends Fragment {
 
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.recycler_view_notes_open);
-        data = new CardsSource();
+        data = new CardsSourceImpl(getResources());
         initRecyclerView();
+        data = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
+            @Override
+            public void initialized(CardsSource cardsData) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        adapter.setDataSource(data);
         if (flag == 1) {
             adapter.notifyItemInserted(0);
         }
@@ -66,7 +73,7 @@ public class NoteOutputFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new NotesAdapter(data, this);
+        adapter = new NotesAdapter( this);
         recyclerView.setAdapter(adapter);
 
         adapter.SetOnItemClickListener(new NotesAdapter.OnItemClickListener() {
