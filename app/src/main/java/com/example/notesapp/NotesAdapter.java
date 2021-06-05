@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
@@ -15,8 +16,21 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     private CardsSource dataSource;
 
-    public NotesAdapter(CardsSource dataSource) {
+    private final Fragment fragment;
+
+    private int menuPosition;
+
+    public int getMenuPosition() {
+        return menuPosition;
+    }
+
+    public NotesAdapter(Fragment fragment) {
+        this.fragment = fragment;
+    }
+
+    public void setDataSource(CardsSource dataSource){
         this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -50,11 +64,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         private TextView name;
         private TextView date;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_note);
             date = itemView.findViewById(R.id.date_note);
             item = itemView.findViewById(R.id.item);
+
+            registerContextMenu(itemView);
 
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,6 +80,21 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                     }
                 }
             });
+
+            item.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    menuPosition = getLayoutPosition();
+                    itemView.showContextMenu();
+                    return true;
+                }
+            });
+        }
+
+        private void registerContextMenu(@NonNull View itemView) {
+            if (fragment != null) {
+                fragment.registerForContextMenu(itemView);
+            }
         }
 
 

@@ -37,7 +37,7 @@
         android:ems="10"
         android:hint="@string/edit_note_hint"
         android:gravity="start|top"
-        android:inputType="textLongMessage|textMultiLine"
+        android:inputType="textLongMessage|textMultiLine|textNoSuggestions"
         android:textColor="@color/black"
         android:textSize="@dimen/edit_text_full_note_text_size"/>
 </LinearLayout>

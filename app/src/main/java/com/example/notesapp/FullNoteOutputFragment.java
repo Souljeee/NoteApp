@@ -10,18 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class FullNoteOutputFragment extends Fragment {
+    Date currentTime;
     View view;
     EditText editTextName;
     EditText editTextDescription;
     private int index;
-    private int newItemFlag;
     public static final String ARG_INDEX = "index";
+    CardsSource dataBaseNoteChecker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,17 +41,38 @@ public class FullNoteOutputFragment extends Fragment {
     }
 
     public void setData(View view) {
-        CardsSource currentCard = new CardsSourceImpl(getResources()).init();
         editTextName = view.findViewById(R.id.edit_text_name);
         editTextDescription = view.findViewById(R.id.edit_text_description);
         if (index != -1) {
-            Note currentNote = currentCard.getNote(index);
-            editTextName.setText(currentNote.getName());
-            editTextDescription.setText(currentNote.getDescription());
+            dataBaseNoteChecker = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
+                @Override
+                public void initialized(CardsSource cardsData) {
+                    Note currentNote = dataBaseNoteChecker.getNote(index);
+                    editTextName.setText(currentNote.getName());
+                    editTextDescription.setText(currentNote.getDescription());
+                }
+            });
+//            Note currentNote = dataBaseNoteChecker.getNote(index);
+//            editTextName.setText(currentNote.getName());
+//            editTextDescription.setText(currentNote.getDescription());
         } else {
             editTextName.setText("");
             editTextDescription.setText("");
         }
+    }
+
+    public void saveData() {
+        editTextName = view.findViewById(R.id.edit_text_name);
+        editTextDescription = view.findViewById(R.id.edit_text_description);
+        currentTime = Calendar.getInstance().getTime();
+        Note note = new Note(editTextName.getText().toString(), currentTime.toString(), editTextDescription.getText().toString());
+        dataBaseNoteChecker = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
+            @Override
+            public void initialized(CardsSource cardsData) {
+
+            }
+        });
+        dataBaseNoteChecker.addNote(note);
     }
 
 
