@@ -1,5 +1,7 @@
 package com.example.notesapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -137,8 +139,22 @@ public class NoteOutputFragment extends Fragment {
         int position = adapter.getMenuPosition();
         switch (item.getItemId()) {
             case R.id.delete:
-                data.deleteNote(position);
-                adapter.notifyItemRemoved(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.alert_dialogue_title)
+                        .setCancelable(true)
+                        .setPositiveButton(R.string.alert_dialogue_positive_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                data.deleteNote(position);
+                                adapter.notifyItemRemoved(position);
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_dialogue_negative_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).show();
                 return true;
         }
         return super.onContextItemSelected(item);
