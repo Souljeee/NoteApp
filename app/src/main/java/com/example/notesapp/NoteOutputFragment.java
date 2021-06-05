@@ -43,13 +43,6 @@ public class NoteOutputFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_output, container, false);
         initView(view);
-        return view;
-    }
-
-    private void initView(View view) {
-        recyclerView = view.findViewById(R.id.recycler_view_notes_open);
-        data = new CardsSourceImpl(getResources());
-        initRecyclerView();
         data = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
             @Override
             public void initialized(CardsSource cardsData) {
@@ -57,6 +50,12 @@ public class NoteOutputFragment extends Fragment {
             }
         });
         adapter.setDataSource(data);
+        return view;
+    }
+
+    private void initView(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view_notes_open);
+        initRecyclerView();
         if (flag == 1) {
             adapter.notifyItemInserted(0);
         }

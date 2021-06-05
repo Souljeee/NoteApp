@@ -35,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
                             .add(R.id.fragment_output_container, input, null)
                             .commit();
                 }
-            } else {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.fragment_output_container, new NoteOutputFragment(), null)
-                        .commit();
             }
+        }else{
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_output_container, new NoteOutputFragment(), null)
+                    .commit();
         }
     }
 

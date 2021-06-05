@@ -66,7 +66,12 @@ public class FullNoteOutputFragment extends Fragment {
         editTextDescription = view.findViewById(R.id.edit_text_description);
         currentTime = Calendar.getInstance().getTime();
         Note note = new Note(editTextName.getText().toString(), currentTime.toString(), editTextDescription.getText().toString());
-        dataBaseNoteChecker = new CardsSourceFirebaseImpl();
+        dataBaseNoteChecker = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
+            @Override
+            public void initialized(CardsSource cardsData) {
+
+            }
+        });
         dataBaseNoteChecker.addNote(note);
     }
 

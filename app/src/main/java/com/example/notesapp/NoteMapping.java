@@ -14,8 +14,8 @@ public class NoteMapping {
     }
 
     public static Note toNote(String id, Map<String,Object> doc){
-        Timestamp timestamp = (Timestamp) doc.get(Fields.DATE);
-        Note answer = new Note((String) doc.get(Fields.NAME),timestamp.toDate().toString(),(String) doc.get(Fields.DESCRIPTION));
+        String timestamp = (String) doc.get(Fields.DATE);
+        Note answer = new Note((String) doc.get(Fields.NAME),timestamp,(String) doc.get(Fields.DESCRIPTION));
         answer.setId(id);
         return answer;
     }
