@@ -11,8 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,9 +29,6 @@ public class NoteOutputFragment extends Fragment {
     private int currentPosition = 0;
     private boolean isLandscape;
 
-    private final int NOTES_COUNT = 5;
-    private final int PADDING_BOTTOM = 30;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,43 +38,34 @@ public class NoteOutputFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_note_output, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_output, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_notes_open);
+        CardsSource data = new CardsSourceImpl(getResources()).init();
+        initRecyclerView(recyclerView, data);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initNotes(view);
     }
 
-    private void initNotes(View view) {
-        LinearLayout layout = (LinearLayout) view;
-        String[] nameOfNotes = getResources().getStringArray(R.array.nameOfNotes);
-        String[] dateOfCreate = getResources().getStringArray(R.array.dateOfCreate);
+    private void initRecyclerView(RecyclerView recyclerView, CardsSource data) {
+        recyclerView.setHasFixedSize(true);
 
-        Note[] notes = new Note[5];
-        for (int i = 0; i < NOTES_COUNT; i++) {
-            notes[i] = new Note(nameOfNotes[i],dateOfCreate[i],null);
-        }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
-        for (int i = 0; i < NOTES_COUNT; i++) {
-            String text = notes[i].getName() + System.lineSeparator() + notes[i].getDate();
-            TextView note = new TextView(getContext());
-            note.setTextColor(getResources().getColor(R.color.black));
-            note.setTextSize(20);
-            note.setText(text);
-            note.setPadding(0, 0, 0, PADDING_BOTTOM);
-            layout.addView(note);
+        final NotesAdapter adapter = new NotesAdapter(data);
+        recyclerView.setAdapter(adapter);
 
-            final int fi = i;
-            note.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    currentPosition = fi;
-                    show(currentPosition);
-                }
-            });
-        }
+        adapter.SetOnItemClickListener(new NotesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                show(position);
+            }
+        });
+
     }
 
     @Override
@@ -82,9 +74,9 @@ public class NoteOutputFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    public void showPort(int fi){
-        Intent intent = new Intent(getActivity(),OpenNoteActivity.class);
-        intent.putExtra(FullNoteOutputFragment.ARG_INDEX,fi);
+    public void showPort(int fi) {
+        Intent intent = new Intent(getActivity(), OpenNoteActivity.class);
+        intent.putExtra(FullNoteOutputFragment.ARG_INDEX, fi);
         startActivity(intent);
     }
 
@@ -95,25 +87,26 @@ public class NoteOutputFragment extends Fragment {
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt(CURRENT_NOTE, 0);
         }
-        if(isLandscape){
+        if (isLandscape) {
             showLand(currentPosition);
         }
     }
 
-    private void show(int index){
-        if(isLandscape){
+    private void show(int index) {
+        if (isLandscape) {
             showLand(index);
-        }else{
+        } else {
             showPort(index);
         }
     }
 
-    private void showLand(int index){
+    private void showLand(int index) {
         FullNoteOutputFragment detail = FullNoteOutputFragment.newInstance(index);
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.full_note_fragment,detail);
+        fragmentTransaction.replace(R.id.full_note_fragment, detail);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
     }
+
 }
