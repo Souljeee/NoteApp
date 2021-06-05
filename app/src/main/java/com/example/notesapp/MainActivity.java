@@ -1,13 +1,18 @@
 package com.example.notesapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,10 +24,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_output_container, new NoteOutputFragment(), null)
-                .commit();
+
+        if (getIntent().getExtras() != null) {
+            if (getIntent().getExtras().getInt(OpenNoteActivity.NEW_NOTE) == 1) {
+                if (savedInstanceState == null) {
+                    NoteOutputFragment input = new NoteOutputFragment();
+                    input.setArguments(getIntent().getExtras());
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.fragment_output_container, input, null)
+                            .commit();
+                }
+            }
+        }else{
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_output_container, new NoteOutputFragment(), null)
+                    .commit();
+        }
     }
 
     @Override
