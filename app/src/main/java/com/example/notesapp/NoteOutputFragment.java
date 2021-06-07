@@ -2,10 +2,8 @@ package com.example.notesapp;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,35 +12,47 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class NoteOutputFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
     private int currentPosition = 0;
     private boolean isLandscape;
+    RecyclerView recyclerView;
+    CardsSource data;
+    NotesAdapter adapter;
+    int flag;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            flag = getArguments().getInt(OpenNoteActivity.NEW_NOTE);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_output, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_notes_open);
-        CardsSource data = new CardsSourceImpl(getResources()).init();
-        initRecyclerView(recyclerView, data);
+        initView(view);
         return view;
+    }
+
+    private void initView(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view_notes_open);
+        data = new CardsSource();
+        initRecyclerView();
+        if (flag == 1) {
+            adapter.notifyItemInserted(0);
+        }
     }
 
     @Override
@@ -50,13 +60,13 @@ public class NoteOutputFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void initRecyclerView(RecyclerView recyclerView, CardsSource data) {
+    private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        final NotesAdapter adapter = new NotesAdapter(data);
+        adapter = new NotesAdapter(data, this);
         recyclerView.setAdapter(adapter);
 
         adapter.SetOnItemClickListener(new NotesAdapter.OnItemClickListener() {
@@ -109,4 +119,22 @@ public class NoteOutputFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = requireActivity().getMenuInflater();
+        inflater.inflate(R.menu.context_note_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = adapter.getMenuPosition();
+        switch (item.getItemId()) {
+            case R.id.delete:
+                data.deleteNote(position);
+                adapter.notifyItemRemoved(position);
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
 }

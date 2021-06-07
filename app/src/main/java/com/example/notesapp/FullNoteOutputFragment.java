@@ -10,17 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class FullNoteOutputFragment extends Fragment {
+    Date currentTime;
     View view;
     EditText editTextName;
     EditText editTextDescription;
     private int index;
-    private int newItemFlag;
     public static final String ARG_INDEX = "index";
 
     @Override
@@ -40,16 +40,27 @@ public class FullNoteOutputFragment extends Fragment {
     }
 
     public void setData(View view) {
-        CardsSource currentCard = new CardsSourceImpl(getResources()).init();
         editTextName = view.findViewById(R.id.edit_text_name);
         editTextDescription = view.findViewById(R.id.edit_text_description);
         if (index != -1) {
-            Note currentNote = currentCard.getNote(index);
+            Note currentNote = CardsSource.getNote(index);
             editTextName.setText(currentNote.getName());
             editTextDescription.setText(currentNote.getDescription());
         } else {
             editTextName.setText("");
             editTextDescription.setText("");
+        }
+    }
+
+    public void saveData() {
+        editTextName = view.findViewById(R.id.edit_text_name);
+        editTextDescription = view.findViewById(R.id.edit_text_description);
+        currentTime = Calendar.getInstance().getTime();
+        Note note = new Note(editTextName.getText().toString(), currentTime.toString(), editTextDescription.getText().toString());
+        if (index != -1) {
+            CardsSource.updateNote(index, note);
+        } else {
+            CardsSource.addNote(note);
         }
     }
 

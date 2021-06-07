@@ -22,4 +22,5 @@ public class Note {
     public String getDescription() {
         return description;
     }
+
 }
